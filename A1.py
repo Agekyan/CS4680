@@ -1,3 +1,9 @@
+# https://github.com/Agekyan/CS4680/blob/main/A1.md #
+# !!! #
+# Assignment 1
+# David Agekyan
+# Professor Sun
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
