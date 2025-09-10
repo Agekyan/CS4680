@@ -1,8 +1,9 @@
-# https://github.com/Agekyan/CS4680/blob/main/A1.md #
+# https://github.com/Agekyan/CS4680/blob/main/A1.md # ... Findings at the bottom of this .py
 # !!! #
 # Assignment 1
 # David Agekyan
 # Professor Sun
+
 
 import pandas as pd
 import numpy as np
@@ -162,6 +163,8 @@ for model_name, metrics in model_performance.items():
     print(f"\n--- {model_name} ---")
     for metric_name, value in metrics.items():
         print(f"{metric_name}: {value:.4f}")
+
+# Findings, Eval, Metrics, Misc
 
 # When predicting heart disease, Recall is a crucial metric.
 # A high Recall score indicates that the model is good at identifying most of the actual positive
