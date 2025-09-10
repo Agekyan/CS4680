@@ -191,3 +191,31 @@ for model_name, metrics in model_performance.items():
 # which could be useful if reducing false positives is also important.  
 # KNN had the lowest recall (0.7805) and F1-score (0.7711),  
 # indicating it is less suitable for this problem where minimizing false negatives is critical.
+
+## Model Performance Summary
+
+"""
+--- KNN ---
+Accuracy: 0.7500
+Precision: 0.7619
+Recall: 0.7805
+F1-score: 0.7711
+
+--- SVM ---
+Accuracy: 0.7763
+Precision: 0.7727
+Recall: 0.8293
+F1-score: 0.8000
+
+--- Decision Tree ---
+Accuracy: 0.7632
+Precision: 0.7447
+Recall: 0.8537
+F1-score: 0.7955
+
+--- Random Forest ---
+Accuracy: 0.7500
+Precision: 0.7292
+Recall: 0.8537
+F1-score: 0.7865
+"""
