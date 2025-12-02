@@ -1,6 +1,7 @@
+```markdown
 # MarketWhisper: AI Financial Storyteller & Multi-Agent System
 
-Final project for **CS4990 – Prompt Engineering: AI Agent Project**
+Final project for 4680, Prompt Engineering (Formally known as CS4990) – AI Agent Project
 
 ---
 
@@ -100,7 +101,7 @@ Local AI file organizer that operates **only inside a user-defined base director
 
 ---
 
-## How This Meets CS4990 Agent Requirements
+## How This Meets 4680 Agent Requirements
 
 **LLM Integration Module**
 - Uses the **OpenAI Python SDK** (`gpt-4o-mini` variants).
@@ -208,11 +209,130 @@ All sources are merged into a unified **external context** string that is fed in
 
 ## Setup and Usage
 
-### 1. Clone the Repository
+1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/marketwhisper.git
-cd marketwhisper
+git clone https://github.com/Agekyan/CS4680.git
+cd CS4680
+```
 
+2. Install Dependencies
 
+```bash
+pip install streamlit yfinance openai numpy pandas requests
+```
 
+(If running in Colab, you may already have some of these preinstalled.)
+
+3. Set Environment Variables
+
+```bash
+export OPENAI_API_KEY="your_openai_key_here"
+
+# Optional: for external newsfeed
+export NEWSAPI_KEY="your_newsapi_key_here"
+```
+
+4. Run the Application
+
+```bash
+streamlit run app.py
+```
+
+If using Google Colab:
+
+- Use the provided %%writefile app.py pattern to write the Streamlit app to a local file in the notebook.
+- Use a tool like localtunnel or ngrok from the Colab environment to expose the Streamlit app on a public URL (commands vary by tool). The repository includes example Colab snippets demonstrating how to write the file and start localtunnel.
+
+---
+
+## Prompt Engineering Techniques
+
+Persona Prompts
+
+- Finance analyst persona for narratives.
+- Portfolio explainer for allocation summaries.
+- File-organization planner for file agent actions.
+
+Few-Shot Examples
+
+- Example narratives for AAPL and TSLA define:
+  - Expected structure.
+  - Level of detail.
+  - How to integrate price, news, sentiment, and analyst views.
+
+JSON-Only Planner Outputs
+
+- Finance Agent Planner:
+  - Enforces JSON with plan + actions.
+- File System Agent Planner:
+  - Enforces JSON actions (mkdir, move, delete_soft) with relative paths.
+
+Tool-Oriented Prompts
+
+- The model is told exactly what actions are available and how to format them.
+- This turns the LLM into a planner, not an executor.
+
+Context Injection
+
+- For stock and earnings questions:
+  - Additional context from yfinance, Reddit, and NewsAPI is injected into the prompt.
+- For chat:
+  - Finance context (tickers, prices, headlines) is appended only when relevant.
+
+---
+
+## Roadmap / Future Work
+
+- Integrate real-time sentiment from:
+  - Full Reddit/Twitter APIs, with proper auth.
+  - Order-book / volume analytics.
+- Add:
+  - Insider trading & institutional flow data via external APIs.
+  - More advanced portfolio construction (risk models, diversification constraints).
+- Extend File System Agent to:
+  - Support tag-based organization.
+  - Include optional summarization of documents before moving.
+- Add user authentication and per-user profiles if deployed publicly.
+- Deploy to a cloud host (Streamlit Cloud, Fly.io, etc.) for frictionless access.
+
+---
+
+## Links / Other Info
+
+- Course: 4680, Prompt Engineering (Formally known as CS4990) – AI Agent Project
+- Project Website / Live Demo: https://cs4680finalproject.streamlit.app/
+- Demo Video: https://youtu.be/zWgaS4p8BRQ
+- Reference Agent Video: https://youtu.be/wcS2QUXKeP4
+- GitHub: https://github.com/Agekyan/CS4680
+- Slides: https://docs.google.com/presentation/...
+- Example / Reference code & repository: https://github.com/Agekyan/CS4680
+
+Project Deliverables:
+
+- GitHub repository with source code + this README.
+- Google Slides presentation.
+- 3–5 minute demo video walking through:
+  - Problem & motivation.
+  - Architecture & prompt design.
+  - Live demo of each tab/agent.
+
+(Update the Slides link above with your actual URLs as needed.)
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+You are free to use, modify, and distribute it with attribution.
+
+---
+
+## Acknowledgments
+
+- Streamlit – simple, powerful app framework.
+- YFinance – convenient access to market data.
+- OpenAI – GPT family of models powering narratives, planning, and chat.
+- Reddit and NewsAPI – external feeds for news and sentiment context.
+- CS4680 instructors and course materials for the AI Agent project framework and inspiration.
+```
