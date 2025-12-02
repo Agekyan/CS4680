@@ -1,4 +1,3 @@
-```markdown
 # MarketWhisper: AI Financial Storyteller & Multi-Agent System
 
 Final project for 4680, Prompt Engineering (Formally known as CS4990) – AI Agent Project
@@ -335,4 +334,3 @@ You are free to use, modify, and distribute it with attribution.
 - OpenAI – GPT family of models powering narratives, planning, and chat.
 - Reddit and NewsAPI – external feeds for news and sentiment context.
 - CS4680 instructors and course materials for the AI Agent project framework and inspiration.
-```
