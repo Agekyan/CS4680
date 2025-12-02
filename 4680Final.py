@@ -133,11 +133,55 @@ REDDIT_USER_AGENT: str = "MarketWhisperBot/1.0 (https://github.com/yourusername/
 # OpenAI Client Setup
 # ======================================================================================
 
-OPENAI_API_KEY: Optional[str] = os.environ.get("OPENAI_API_KEY")
+# The app will attempt to retrieve the OpenAI API key in this order:
+# 1. st.secrets["OPENAI_API_KEY"] or st.secrets["openai_secret_key"]
+# 2. environment variables (OPENAI_API_KEY, OPENAI_SECRET_KEY, openai_secret_key)
+# 3. user-entered session-only key via a secure Streamlit text_input (password mode)
+#
+# This avoids committing secrets into source code. Make sure to set your Streamlit
+# secrets (preferred for deployed Streamlit apps) or set an environment variable
+# locally. For quick local runs you can paste the key in the session-only box.
+
+def _get_openai_api_key() -> Optional[str]:
+    # 1) Try Streamlit secrets (common keys)
+    try:
+        if hasattr(st, "secrets"):
+            # Use `.get` to avoid KeyError if secrets isn't present or the key isn't set
+            key = st.secrets.get("OPENAI_API_KEY") or st.secrets.get("openai_secret_key")
+            if key:
+                return key
+    except Exception:
+        # If Streamlit secrets access fails for any reason, silently continue to env vars
+        pass
+
+    # 2) Fallback to environment variables (common names)
+    return (
+        os.environ.get("OPENAI_API_KEY")
+        or os.environ.get("OPENAI_SECRET_KEY")
+        or os.environ.get("openai_secret_key")
+    )
+
+OPENAI_API_KEY: Optional[str] = _get_openai_api_key()
 
 if not OPENAI_API_KEY:
-    st.error("OpenAI API key not found. Please ensure the OPENAI_API_KEY environment variable is set.")
-    st.stop()
+    # Provide a secure session-only input so users can paste the key without hardcoding it.
+    # This won't persist across sessions unless saved in st.secrets or an environment variable.
+    try:
+        st.warning(
+            "OpenAI API key not found in Streamlit secrets or environment variables. "
+            "You can set `st.secrets['OPENAI_API_KEY']` or enter the key below for this session."
+        )
+        entered_key = st.text_input("Enter OpenAI API key (session-only)", type="password")
+        if entered_key:
+            OPENAI_API_KEY = entered_key.strip()
+        else:
+            # Stop the app here to avoid confusing later errors when trying to call the API.
+            st.stop()
+    except Exception:
+        # If Streamlit isn't fully available or text_input fails, raise a clear error.
+        raise RuntimeError(
+            "OpenAI API key not set. Please configure `OPENAI_API_KEY` in st.secrets or environment."
+        )
 
 if _OPENAI_CLIENT_CLASS_AVAILABLE:
     client = OpenAI(api_key=OPENAI_API_KEY)
@@ -2684,4 +2728,5 @@ st.info(
     "- Logging of all actions for auditability\n\n"
     "Nothing here is financial advice. Use this as a learning tool."
 )
+
 
