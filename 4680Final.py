@@ -2684,3 +2684,4 @@ st.info(
     "- Logging of all actions for auditability\n\n"
     "Nothing here is financial advice. Use this as a learning tool."
 )
+
